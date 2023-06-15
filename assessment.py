@@ -167,7 +167,7 @@ class MoroccanRecipe(Recipe):
 
 class EthiopianRecipe(Recipe):
     def __init__(self, name, ingredients, preparation_time, cooking_method, injera_required):
-        super().__init__(name, "RWANDA", ingredients, preparation_time, cooking_method)
+        super().__init__(name, "", ingredients, preparation_time, cooking_method)
         self.injera_required = injera_required
 
     def display(self):
