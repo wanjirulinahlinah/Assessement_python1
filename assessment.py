@@ -178,7 +178,7 @@ class EthiopianRecipe(Recipe):
 class NigerianRecipe(Recipe):
     def __init__(self, name, ingredients, preparation_time, cooking_method, protein_source):
         super().__init__(name, "Nigeria", ingredients, preparation_time, cooking_method)
-        self.protein_source = protein_source
+        self.vitamin_source = vitamin_source
 
     def display(self):
         super().display()
