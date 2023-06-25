@@ -7,104 +7,59 @@
 # objects, and how inheritance might come into play if there are different types of
 # stories or storytellers.
 
-# Sudo code
-
-# INPUT 
-# title
-# content
-# length
-# moral lessons
-# target-age-group
-
-# OUTPUT
-# in class story i will have this methods
-#  get_title
-#  get_content
-#  get_moral+lessons
-#  get_target_age_group
-# in class story teller i will have this methods
-# get_name
-# get_language
-# get_culture
-# tell_story
-# in class translatei will have the method translate
-# translate
-
-# # proccess
-# create a class for story and have attributes like 
-# title, content, length, moral_lessons, target_age_group
-# create a different class for: 
-# storyteller with attributes like 
-# name, language, culture
-# and a class for translated_story
-
-class story:
-    def __init__(self,title,content,length,moral_lessons,target_age_group) :
-        self.title = title
-        self.content = content
-        self.length= length
-        self.moral_lessons=moral_lessons
-        self.target_age_group=target_age_group
 
 
-    def get_title(self):
-        return self.title
-    
-    def get_length(self):
-        return self.length
-    
-    def get_content(self):
-        return self.content
-    
-    def get_moral_lessons(self):
-        return self.title
-    
-    def get_targe_age_group(self):
-        return self.title
-    
 
-    
-  
 
-class StoryTeller:
-    def __init__(self,name,language,culture):
-        self.name=name
-        self.language=language
-        self.culture=culture
-  
-    
-    def get_name(self):
-        return self.name
-    
-    def get_language(self):
-        return self.language
-    
-    def get_culture(self):
-        return self.culture
-    
-    def tell_story(self, story):
-        print(f"Story Title: {story.get_title()}")
-        print(f"Story Content: {story.get_content()}")
-        print(f"Story Length: {story.get_length()}")
-        print(f"Moral Lessons: {story.get_moral_lessons()}")
- 
-class Translator:
-    def translate(self, story, target_language):
-      
 
-story = Story(
-    title="Angels never die",
-    content="Long time ago...",
-    length=10,
-    moral_lessons=["peace", "christianity"],
-    target_age_group="youths"
-)
+class Story:
+   def __init__(self, title, length, moralLesson, ageGroup):
+       self.title = title
+       self.length = length
+       self.moralLesson = moralLesson
+       self.ageGroup = ageGroup
 
-storyteller = StoryTeller(
-    name="Linah",
-    language="English",
-    culture="Kikuyu"
-)
+
+   def displayDetails(self):
+       print(f"Title: {self.title}")
+       print(f"Length: {self.length}")
+       print(f"Moral Lesson: {self.moralLesson}")
+       print(f"Age Group: {self.ageGroup}")
+
+
+   def tellStory(self, storyTeller):
+       print(f"{storyTeller.name} is telling a story in {storyTeller.language}:")
+       self.displayDetails()
+
+
+
+
+class Translator(Story):
+   def __init__(self, title, length, moralLesson, ageGroup, name, language, targetLanguage):
+       super().__init__(title, length, moralLesson, ageGroup)
+       self.name = name
+       self.language = language
+       self.targetLanguage = targetLanguage
+
+
+   def translateAndTell(self):
+       print(f"{self.name} is translating and telling a story in {self.targetLanguage}:")
+       translatedStory = Story(self.title, self.length, self.moralLesson, self.ageGroup)
+       print("Translated Story:")
+       translatedStory.displayDetails()
+
+
+story1 = Story("The Lion and the Mouse", "Short", "Helping others is important", "Children")
+story2 = Story("The Tortoise and the Hare", "Medium", "Slow and steady wins the race", "Children")
+
+
+translator1 = Translator("The Lion and the Mouse", "Short", "Helping others is important", "Children", "Emma", "English", "French")
+translator2 = Translator("The Tortoise and the Hare", "Medium", "Slow and steady wins the race", "Children", "Luis", "Spanish", "English")
+
+
+translator1.translateAndTell()
+translator2.translateAndTell()
+
 
 
 
@@ -116,73 +71,130 @@ storyteller = StoryTeller(
 # `EthiopianRecipe`, `NigerianRecipe`), each with their own unique properties and
 # methods.
 
-# SUDO CODE
-# iNPUT
-#  name
-#  country
-#  ingredients
-#  preparation_time
-#  cooking_method
-
-# OUTPUT
-# METHODS 
-# def display
-
-# PROCCESS
-# TO HAVE A MAIN CLASS RECIPE AND THE SUBCLASSES FOR 
-# `MoroccanRecipe`,
-# # `EthiopianRecipe`, `NigerianRecipe`),
-# THEN A METHOD DISPLAY INHERITING FROM the main class recipe
 
 
 
 
 class Recipe:
-    def __init__(self, name, country, ingredients, preparation_time, cooking_method):
-        self.name = name
-        self.country = country
-        self.ingredients = ingredients
-        self.preparation_time = preparation_time
-        self.cooking_method = cooking_method
+   def __init__(self, ingredients, preparation_time, nutritional_information):
+       self.ingredients = ingredients
+       self.preparation_time = preparation_time
+       self.nutritional_information = nutritional_information
 
-    def display(self):
-        print("Recipe: {}".format(self.name))
-        print("Country: {}".format(self.country))
-        print("Preparation Time: {}".format(self.preparation_time))
-     
 
-    def calculate_nutrition(self):
-          print("Recipe: {}".format(self.name)(self.country))
+   def display_recipe(self):
+       print("Ingredients", self.ingredients)
+       print("Preparation Time", self.preparation_time)
+       print("Nutritional Information", self.nutritional_information)
+
+
+   def cooking_method(self):
+       print("Add four glasses of water")
+       print("Leave it to boil")
+       print("Add two spoons of salt")
+       print("Add three spoons of cooking oil")
+       print("Add half a kilo of rice")
+       print("Cover to simmer")
+
+
 
 
 class MoroccanRecipe(Recipe):
-    def __init__(self, name, ingredients, preparation_time, cooking_method, spice_level):
-        super().__init__(name, "kENYA", ingredients, preparation_time, cooking_method)
-        self.spice_level = spice_level
-
-    def display(self):
-        super().display()
-        print("Spice Level: {}".format(self.spice_level))
 
 
-class EthiopianRecipe(Recipe):
-    def __init__(self, name, ingredients, preparation_time, cooking_method, injera_required):
-        super().__init__(name, "", ingredients, preparation_time, cooking_method)
-        self.injera_required = injera_required
+   def display_recipe(self):
 
-    def display(self):
-        super().display()
-        print("retion Required: {}".format(self.retio_required))
+
+       super().display_recipe()
+
+
+# It allows the subclass to inherit and execute the parent class's implementation of the method before adding 
+# its own additional code.
+
+
+
+   def cooking_method(self):
+
+
+       print("On a pre-heated pan, add two spoons of cooking oil")
+
+
+       print("Add two well-sliced onions")
+
+
+       print("Add five well-chopped tomatoes")
+
+
+       print("Leave the tomatoes to get heated and create a paste")
+
+
+       print("Add boiled rice")
+
+
+
+
+
+
+
+
 
 
 class NigerianRecipe(Recipe):
-    def __init__(self, name, ingredients, preparation_time, cooking_method, protein_source):
-        super().__init__(name, "Nigeria", ingredients, preparation_time, cooking_method)
-        self.vitamin_source = vitamin_source
 
-    def display(self):
-        super().display()
-        print("Protein Source: {}".format(self.protein_source))
+
+   def display_recipe(self):
+
+
+       super().display_recipe()
+
+
+
+
+
+
+   def cooking_method(self):
+
+
+       print("On a pre-heated pan, add two spoons of cooking oil")
+
+
+       print("Leave it to boil")
+
+
+       print("Add five well-chopped tomatoes")
+
+
+       print("Leave the tomatoes to get heated and create a paste")
+
+
+       print("Add boiled rice")
+       
+       
+       
+       # Example usage
+moroccan_recipe = MoroccanRecipe(
+    ingredients=["Cooking oil", "Onions", "Tomatoes", "Rice"],
+    preparation_time=15,
+    nutritional_information="...",
+)
+moroccan_recipe.display_recipe()
+moroccan_recipe.cooking_method()
+
+ethiopian_recipe = EthiopianRecipe(
+    ingredients=["Oil", "Onions", "Garlic", "Spices", "Meat or Vegetables", "Injera"],
+    preparation_time=30,
+    nutritional_information="...",
+)
+ethiopian_recipe.display_recipe()
+ethiopian_recipe.cooking_method()
+
+nigerian_recipe = NigerianRecipe(
+    ingredients=["Cooking oil", "Onions", "Tomatoes", "Rice", "Spices"],
+    preparation_time=20,
+    nutritional_information="...",
+)
+nigerian_recipe.display_recipe()
+nigerian_recipe.cooking_method()
 
 
 
