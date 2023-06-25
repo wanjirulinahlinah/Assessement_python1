@@ -180,14 +180,6 @@ moroccan_recipe = MoroccanRecipe(
 moroccan_recipe.display_recipe()
 moroccan_recipe.cooking_method()
 
-ethiopian_recipe = EthiopianRecipe(
-    ingredients=["Oil", "Onions", "Garlic", "Spices", "Meat or Vegetables", "Injera"],
-    preparation_time=30,
-    nutritional_information="...",
-)
-ethiopian_recipe.display_recipe()
-ethiopian_recipe.cooking_method()
-
 nigerian_recipe = NigerianRecipe(
     ingredients=["Cooking oil", "Onions", "Tomatoes", "Rice", "Spices"],
     preparation_time=20,
@@ -232,34 +224,42 @@ nigerian_recipe.cooking_method()
 # diet, lifespan, migration_pattern
 
 
+
 class Species:
-    def __init__(self, diet, lifespan):
+    def __init__(self, name, diet, lifespan):
+        self.name = name
         self.diet = diet
         self.lifespan = lifespan
 
-    def eat(self):
-        pass
-
-    def reproduce(self):
-        pass
+    def __str__(self):
+        return self.name
 
 
 class Predator(Species):
-    def __init__(self, diet, lifespan, hunting_strategy):
-        super().__init__(diet, lifespan)
-        self.hunting_strategy = hunting_strategy
+    def __init__(self, name, diet, lifespan, hunting_method):
+        super().__init__(name, diet, lifespan)
+        self.hunting_method = hunting_method
 
-    def hunt(self):
-        pass
+    def __str__(self):
+        return f"{self.name} (Predator)"
 
 
 class Prey(Species):
-    def __init__(self, diet, lifespan, migration_pattern):
-        super().__init__(diet, lifespan)
+    def __init__(self, name, diet, lifespan, migration_pattern):
+        super().__init__(name, diet, lifespan)
         self.migration_pattern = migration_pattern
 
-    def flee(self):
-        pass
+    def __str__(self):
+        return f"{self.name} (Prey)"
+
+
+# Example usage:
+lion = Predator("Lion", "Carnivore", 10, "Ambush hunting")
+zebra = Prey("Zebra", "Herbivore", 20, "Seasonal migration")
+
+print(lion)
+print(zebra)
+
 
 # Q4
 
@@ -290,11 +290,13 @@ class Prey(Species):
 # other subclassess for perfomance and stage
 
 class Artist:
-    def __init__(self, name, country, musical_style, instruments):
+    def __init__(self, name, country, musical_style):
         self.name = name
         self.country = country
         self.musical_style = musical_style
-        self.instruments = instruments
+
+    def __str__(self):
+        return self.name
 
 
 class Performance:
@@ -302,6 +304,9 @@ class Performance:
         self.artist = artist
         self.start_time = start_time
         self.end_time = end_time
+
+    def __str__(self):
+        return f"{self.artist} ({self.start_time}-{self.end_time})"
 
 
 class Stage:
@@ -313,15 +318,25 @@ class Stage:
     def add_performance(self, performance):
         self.schedule.append(performance)
 
+    def __str__(self):
+        return self.name
 
 
-artist1 = Artist("Artist 1", "Country 1", "Style 1", ["Instrument 1"])
-artist2 = Artist("Artist 2", "Country 2", "Style 2", ["Instrument 2"])
+# Example usage:
+artist1 = Artist("Femi Kuti", "Nigeria", "Afrobeat")
+artist2 = Artist("Salif Keita", "Mali", "Mande music")
 
-performance1 = Performance(artist1, "10:00 AM", "11:00 AM")
+performance1 = Performance(artist1, "18:00", "20:00")
+performance2 = Performance(artist2, "20:30", "22:30")
 
 stage1 = Stage("Main Stage", 1000)
 stage1.add_performance(performance1)
+stage1.add_performance(performance2)
+
+print(stage1)
+for performance in stage1.schedule:
+    print(performance)
+
 
 
 
@@ -345,38 +360,30 @@ stage1.add_performance(performance1)
 # price
 # quantity
 
-
-
-
-
 class Product:
     def __init__(self, name, price, quantity):
         self.name = name
         self.price = price
         self.quantity = quantity
-    
+
     def calculate_total_value(self):
         return self.price * self.quantity
-    
-    
 
 
-product1 = Product("pawpaw", 1.5, 10)
-product2 = Product("Banana", 0.5, 20)
-product3 = Product("Orange", 1.0, 15)
-
+# Example usage:
+product1 = Product("Laptop", 1000, 5)
+product2 = Product("Phone", 500, 10)
+product3 = Product("Headphones", 50, 20)
 
 total_value1 = product1.calculate_total_value()
 total_value2 = product2.calculate_total_value()
+total_value3 = product3.calculate_total_value()
+
+print(f"Total value of {product1.name}: {total_value1}")
+print(f"Total value of {product2.name}: {total_value2}")
+print(f"Total value of {product3.name}: {total_value3}")
 
 
-total_value_all = total_value1 + total_value2 + total_value3
-
-
-print(f"Total value of {product1.name}: ${total_value1}")
-print(f"Total value of {product2.name}: ${total_value2}")
-print(f"Total value of {product3.name}: ${total_value3}")
-print(f"Total value of all products: ${total_value_all}")
 
 # 6. Implement a class called Student with attributes for name, age, and grades (a
 # list of integers). Include methods to calculate the average grade, display the
@@ -403,42 +410,44 @@ input
 #  display_student_info
 
 
-
 class Student:
     def __init__(self, name, age, grades):
         self.name = name
         self.age = age
         self.grades = grades
-    
+
     def calculate_average_grade(self):
-        if len(self.grades) == 0:
-            return 0
-        return sum(self.grades) / len(self.grades)
-    
+        total_grades = sum(self.grades)
+        average_grade = total_grades / len(self.grades)
+        return average_grade
+
     def display_student_info(self):
-        print("Name:", self.name)
-        print("Age:", self.age)
-        print("Grades:", self.grades)
-    
+        print(f"Name: {self.name}")
+        print(f"Age: {self.age}")
+        print(f"Grades: {self.grades}")
+
     def has_passed(self):
         average_grade = self.calculate_average_grade()
         return average_grade >= 60
 
 
-student1 = Student("John Doe", 18, [80, 75, 90, 65, 70])
+# Example usage:
+student1 = Student("John", 20, [80, 75, 90, 65, 70])
+student2 = Student("Jane", 22, [55, 60, 45, 70, 80])
 
 student1.display_student_info()
+average_grade1 = student1.calculate_average_grade()
+print(f"Average Grade: {average_grade1}")
+print(f"Has Passed: {student1.has_passed()}")
+
+print()
+
+student2.display_student_info()
+average_grade2 = student2.calculate_average_grade()
+print(f"Average Grade: {average_grade2}")
+print(f"Has Passed: {student2.has_passed()}")
 
 
-average_grade = student1.calculate_average_grade()
-
-print("Average Grade:", average_grade)
-
-
-if student1.has_passed():
-    print("The student has passed.")
-else:
-    print("The student has not passed.")
 
 
 # 7. Create a FlightBooking class that represents a flight booking system. Implement
@@ -474,63 +483,79 @@ class FlightBooking:
     def search_flights(self, destination, date):
         available_flights = []
         for flight in self.flights:
-            if flight.destination == destination and flight.date == date and flight.is_available():
+            if flight.destination == destination and flight.date == date and flight.has_available_seats():
                 available_flights.append(flight)
         return available_flights
 
+    def reserve_seat(self, flight, passenger_name):
+        if flight.has_available_seats():
+            flight.reserve_seat(passenger_name)
+            return True
+        else:
+            return False
 
-    def get_passenger_info(self, flight):
-        return flight.passengers
+    def update_passenger_info(self, flight, passenger_name, new_info):
+        flight.update_passenger_info(passenger_name, new_info)
 
-    def generate_booking_confirmation(self, flight, passenger):
-        if passenger in flight.passengers:
-            confirmation = f"Booking confirmation for {passenger.name} on flight {flight.flight_number}."
-            return confirmation
-        return None
+    def generate_booking_confirmation(self, flight, passenger_name):
+        return flight.generate_booking_confirmation(passenger_name)
 
 
 class Flight:
-    def __init__(self, flight_number, destination, date, capacity):
+    def __init__(self, flight_number, destination, date, total_seats):
         self.flight_number = flight_number
         self.destination = destination
         self.date = date
-        self.capacity = capacity
-        self.passengers = []
+        self.total_seats = total_seats
+        self.passengers = {}
 
-    def is_available(self):
-        return len(self.passengers) < self.capacity
+    def has_available_seats(self):
+        return len(self.passengers) < self.total_seats
 
-    def reserve_seat(self, passenger):
-        if self.is_available():
-            self.passengers.append(passenger)
+    def reserve_seat(self, passenger_name):
+        self.passengers[passenger_name] = {}
+
+    def update_passenger_info(self, passenger_name, new_info):
+        if passenger_name in self.passengers:
+            self.passengers[passenger_name] = new_info
+
+    def generate_booking_confirmation(self, passenger_name):
+        if passenger_name in self.passengers:
+            confirmation = f"Booking Confirmation\nFlight: {self.flight_number}\n" \
+                           f"Destination: {self.destination}\n" \
+                           f"Date: {self.date}\n" \
+                           f"Passenger: {passenger_name}\n"
+            return confirmation
+        else:
+            return "Passenger not found in the flight."
 
 
-class Passenger:
-    def __init__(self, name):
-        self.name = name
-
-
-
+# Example usage:
 booking_system = FlightBooking()
 
-
-flight1 = Flight("FL001", "UGANDA", "2023-06-20", 100)
-flight2 = Flight("FL002", "London", "2023-06-22", 150)
-
+flight1 = Flight("FL001", "New York", "2023-07-01", 100)
+flight2 = Flight("FL002", "London", "2023-07-02", 150)
 
 booking_system.add_flight(flight1)
 booking_system.add_flight(flight2)
 
-available_flights = booking_system.search_flights("UGANDA", "2023-06-20")
-print("Available flights:")
-for flight in available_flights:
-    print(f"Flight: {flight.flight_number}, Destination: {flight.destination}, Date: {flight.date}")
+available_flights = booking_system.search_flights("New York", "2023-07-01")
+if available_flights:
+    selected_flight = available_flights[0]
+    passenger_name = "John Smith"
 
-passenger1 = Passenger("John Smith")
-if booking_system.reserve_seat(flight1, passenger1):
-    print(f"Seat reserved for {passenger1.name} on flight {flight1.flight_number}")
+    if booking_system.reserve_seat(selected_flight, passenger_name):
+        print("Seat reserved successfully.")
+    else:
+        print("No available seats on the selected flight.")
+
+    booking_system.update_passenger_info(selected_flight, passenger_name, {"Seat Number": "A12"})
+
+    confirmation = booking_system.generate_booking_confirmation(selected_flight, passenger_name)
+    print(confirmation)
 else:
-    print("Seat reservation failed. Flight is not available.")
+    print("No available flights on the selected date and destination.") 
+
 
 
 
@@ -554,63 +579,86 @@ else:
 # create a class  library catalog with  attributes andmethods
 
     
-
-
 class Book:
-    def __init__(self, title, author, copies):
+    def __init__(self, title, author, total_copies):
         self.title = title
         self.author = author
-        self.copies = copies
+        self.total_copies = total_copies
+        self.available_copies = total_copies
 
-    def __str__(self):
-        return f"Title: {self.title}, Author: {self.author}, Copies available: {self.copies}"
+    def is_available(self):
+        return self.available_copies > 0
+
+    def borrow_book(self):
+        if self.is_available():
+            self.available_copies -= 1
+            return True
+        else:
+            return False
+
+    def return_book(self):
+        if self.available_copies < self.total_copies:
+            self.available_copies += 1
 
 
 class LibraryCatalog:
     def __init__(self):
         self.books = []
 
-    def add_book(self, title, author, copies=1):
-        new_book = Book(title, author, copies)
-        self.books.append(new_book)
-        print(f"Book '{title}' by {author} has been added to the catalog.")
+    def add_book(self, book):
+        self.books.append(book)
 
     def search_by_title(self, title):
-        matching_books = [book for book in self.books if book.title.lower() == title.lower()]
-        if matching_books:
-            for book in matching_books:
-                print(book)
-        else:
-            print(f"No books found with the title '{title}'.")
+        found_books = []
+        for book in self.books:
+            if book.title.lower() == title.lower():
+                found_books.append(book)
+        return found_books
 
     def search_by_author(self, author):
-        matching_books = [book for book in self.books if book.author.lower() == author.lower()]
-        if matching_books:
-            for book in matching_books:
-                print(book)
-        else:
-            print(f"No books found by the author '{author}'.")
+        found_books = []
+        for book in self.books:
+            if book.author.lower() == author.lower():
+                found_books.append(book)
+        return found_books
 
-    def display_book_details(self):
-        if self.books:
-            for book in self.books:
-                print(book)
-        else:
-            print("The library catalog is empty.")
+    def display_book_details(self, book):
+        print("Title:", book.title)
+        print("Author:", book.author)
+        print("Total Copies:", book.total_copies)
+        print("Available Copies:", book.available_copies)
 
 
+# Example usage:
+catalog = LibraryCatalog()
 
+book1 = Book("Python Crash Course", "Eric Matthes", 5)
+book2 = Book("Deep Learning", "Ian Goodfellow", 3)
+book3 = Book("The Great Gatsby", "F. Scott Fitzgerald", 10)
 
+catalog.add_book(book1)
+catalog.add_book(book2)
+catalog.add_book(book3)
 
+searched_books = catalog.search_by_title("python crash course")
+if searched_books:
+    selected_book = searched_books[0]
+    catalog.display_book_details(selected_book)
+    if selected_book.is_available():
+        selected_book.borrow_book()
+        print("Book borrowed successfully.")
+    else:
+        print("Book is not available.")
+else:
+    print("Book not found in the catalog.")
 
+print()
 
-
-
-
-
-
-
-
-
-
-
+searched_books = catalog.search_by_author("F. Scott Fitzgerald")
+if searched_books:
+    selected_book = searched_books[0]
+    catalog.display_book_details(selected_book)
+    selected_book.return_book()
+    print("Book returned successfully.")
+else:
+    print("Book not found in the catalog.")
